@@ -4,7 +4,10 @@ import struct
 import os
 from collections import namedtuple   
 import uuid
+import sys
+from datetime import datetime
 
+from initialize import initialize
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form")
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -27,7 +30,7 @@ arguments = {}
 file_path = "chain"
 
 
-block_format = struct.Struct('32s d 16s I 12s 20s 20s I')
+block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
 block_head = namedtuple('Block_head', 'hash timestamp case_id item_id state handler organization length')
 block_data = namedtuple('Block_Data', 'data')
 prev_hash = b''
@@ -60,9 +63,41 @@ if action not in ["init", "verify"]:
 
 else:
     if action == "init":
-        print("init")
+
+        initiate = initialize(file_path)
+        
+        
+        if initiate == False:
+            print("Blockchain file found with INITIAL block.")
+
+            #exit
+            sys.exit(0)
+        else:
+            currTime = datetime.now()
+            timestamp = datetime.timestamp(currTime)
+            headVals = (str.encode(""), timestamp, str.encode(""), 0, str.encode("INITIAL"), str.encode(""), str.encode(""), 14)
+            dataVal = (str.encode("Initial block"))
+            block_data_format = struct.Struct('14s')
+            packed_headVals = block_format_head.pack(*headVals)
+            packed_dataVals = block_data_format.pack(dataVal)
+
+            curr_head = block_head._make(block_format_head.unpack(packed_headVals))
+            curr_data = block_data._make(block_data_format.unpack(packed_dataVals))
+
+            #print(curr_head)
+            #print(curr_data)
+            print("this was created because there was no blockchain in the first place")
+
+            filepath = open(file_path, 'wb')
+            filepath.write(packed_headVals)
+            filepath.write(packed_dataVals)
+            filepath.close()
+
+            #intializeinbkod
+            prev_hash = hashlib.sha1(packed_headVals + packed_dataVals).digest()
 
     else:
         #verify
         print("verify")
 
+sys.exit(0)
