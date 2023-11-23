@@ -22,7 +22,7 @@ def initialize(file_path):
 
         currTime = datetime.now()
         timestamp = datetime.timestamp(currTime)
-        headVals = (str.encode(""), timestamp, str.encode(""), 0, str.encode("INITIAL"), str.encode(""), str.encode(""), 14)
+        headVals = (str.encode(""), timestamp, str.encode(""), 0, str.encode(""), str.encode(""), str.encode(""), 14)
         dataVal = (str.encode("Initial block"))
         block_data_format = struct.Struct('14s')
         packed_headVals = block_format_head.pack(*headVals)
@@ -57,7 +57,7 @@ def initialize(file_path):
     filepath.close()
 
     if "INITIAL" in (curr_head.state).decode('utf-8').upper():
-        return False
-    else:
         return True
+    else:
+        return False
 

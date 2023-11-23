@@ -9,13 +9,13 @@ from datetime import datetime
 
 from initialize import initialize
 
-parser = argparse.ArgumentParser(description="Create Blockchain of Custody form")
+parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
 parser.add_argument("action")
 parser.add_argument('-c', help='case id') #case ID
 parser.add_argument('-i', action='append') #Item ID
-#parser.add_argument('-h') #handler  #having trouble with this due to '-h" also being help feature for arg parse
-#parser.add_argument('-o') #organization # cant have two arguments that are '-o' need to find workaround
+parser.add_argument('-h') #handler  #having trouble with this due to '-h" also being help feature for arg parse
+parser.add_argument('-o') #organization # cant have two arguments that are '-o' need to find workaround
 parser.add_argument('-n') #number of entries
 parser.add_argument('-y', '-why') #reason
 parser.add_argument('-o', nargs='*') #owner Info
@@ -27,7 +27,7 @@ arguments = {}
 
 
 #file_path = os.getenv('BCHOC_FILE_PATH')
-file_path = "chain"
+file_path = "Blockchain"
 
 
 block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
@@ -67,7 +67,7 @@ else:
         initiate = initialize(file_path)
         
         
-        if initiate == False:
+        if initiate == True:
             print("Blockchain file found with INITIAL block.")
 
             #exit
