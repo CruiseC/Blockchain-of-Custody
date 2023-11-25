@@ -6,7 +6,7 @@ from collections import namedtuple
 from datetime import datetime
 from errors import *
 
-def checkout(item_id, file_path):
+def checkout(item_id, handler, organization, file_path):
 
     success = True
     state = ''
@@ -32,11 +32,12 @@ def checkout(item_id, file_path):
 
             if int(item_id[0]) == curr_head.item_id:
                 case_id = curr_head.case_id
+
                 state = curr_head.state
 
-                print(state)
-                handler = curr_head.handler
-                organization = curr_head.organization
+                
+                #handler = curr_head.handler
+                #organization = curr_head.organization
 
         except:
             break
@@ -49,7 +50,7 @@ def checkout(item_id, file_path):
 
             currTime = datetime.now()
             timestamp = datetime.timestamp(currTime)
-            headVals = (previousHash, timestamp, case_id, item_id, int(item_id[0]), str.encode("CHECKEDOUT"), handler, organization, 0)
+            headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDOUT"), str.encode(""), str.encode(""), 0)
             dataVals = b''
             block_data_format = struct.Struct('0s')
             packed_headVals = block_format_head.pack(*headVals)
@@ -65,7 +66,14 @@ def checkout(item_id, file_path):
             filepath.write(packed_dataVals)
             filepath.close()
 
-            print("Case:", str(uuid.UUID(bytes=case_id)))
+            caseID = b""
+        
+            rev_case_id = case_id
+
+            for j in range(0, len(rev_case_id)):
+                caseID = bytes([rev_case_id[j]]) + caseID
+
+            print("Case:", str(uuid.UUID(bytes=caseID)))
             print("Checked in item:", item_id[0])
             print("\tStatus:", "CHECKEDOUT")
             print("\tTime of action:", currTime.strftime('%Y-%m-%dT%H:%M:%S.%f') + 'Z')
@@ -73,10 +81,14 @@ def checkout(item_id, file_path):
             success = True
         
         else:
+            sys.exit(1)
             print('Incorrect State')
+            
 
     except:
         # Item ID not found
+        sys.exit(1)
         print('Incorrect Item')
         
-    sys.exit(1)
+        
+    sys.exit(0)

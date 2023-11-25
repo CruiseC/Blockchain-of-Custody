@@ -61,11 +61,15 @@ if action not in ["init", "verify"]:
         #print("add")
 
     elif action == "checkout" or action == "checkin":
+
         arguments["item_id"] = args.i
-        if action == 'checkout':
-            checkout(arguments['item_id'], file_path)
+        arguments["handler"] = args.h 
+        arguments["organization"] = args.o 
+
+        if action == 'checkin':
+            checkin(arguments['item_id'], arguments["handler"], arguments["organization"], file_path)
         else:
-            checkin(arguments['item_id'], file_path)
+            checkout(arguments['item_id'], arguments["handler"], arguments["organization"], file_path)
 
     #show cases function
     elif action == "show" and shows == "cases":
