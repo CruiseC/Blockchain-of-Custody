@@ -13,16 +13,18 @@ from addition import addition
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
 parser.add_argument("action")
+parser.add_argument("shows", nargs='?')
 parser.add_argument('-c', help='case id') #case ID
 parser.add_argument('-i', action='append') #Item ID
-parser.add_argument('-h') #handler  #having trouble with this due to '-h" also being help feature for arg parse
-parser.add_argument('-o') #organization # cant have two arguments that are '-o' need to find workaround
+parser.add_argument('-h') #handler  
+parser.add_argument('-o') #organization 
 parser.add_argument('-n') #number of entries
 parser.add_argument('-y', '-why') #reason
 parser.add_argument('-o', nargs='*') #owner Info
 
 args = parser.parse_args()
 action = args.action
+shows = args.shows
 arguments = {}
 
 
@@ -57,16 +59,16 @@ if action not in ["init", "verify"]:
     elif action == "checkout" or action == "checkin":
         print ("checkout/checkin")
 
-    elif action == "show cases":
+    elif action == "show" and shows == "cases":
         #not working yet need to figure out way to go into this path with double letter arguments
         print("cases showing")
 
 
-    elif action == "show items":
+    elif action == "show" and shows == "items":
         #not working yet need to figure out way to go into this path with double letter arguments
         print("show items")
 
-    elif action == "show history":
+    elif action == "show" and shows == "history":
         #not working yet need to figure out way to go into this path with double letter arguments
         print("history")
 
@@ -78,14 +80,14 @@ if action not in ["init", "verify"]:
         arguments["owner"] = args.o 
 
         if (arguments["reason"] == "RELEASED"):
-            if not argumets["owner"]:
+            if not arguments["owner"]:
                 print("error") # replace with error handling
         
         if arguments["reason"] not in ["RELEASED", "DISPOSED", "DESTROYED"]:
             print("error")  # replace with error handling
 
         # pass arguments into the remove function
-        remove(arguments["item_id"], arguments["reason"], argumets["owner"], file_path)
+        remove(arguments["item_id"], arguments["reason"], arguments["owner"], file_path)
 
 else:
     if action == "init":
