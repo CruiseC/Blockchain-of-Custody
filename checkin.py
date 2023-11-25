@@ -9,9 +9,9 @@ from initialize import initialize
 
 def checkin(item_id, file_path):
     success = True
-    state = ' '
-    previousHash = 'b'
-    case_id = ' '
+    state = ''
+    previousHash = b''
+    case_id = ''
     
     block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
     block_head = namedtuple('Block_head', 'hash timestamp case_id item_id state handler organization length')
