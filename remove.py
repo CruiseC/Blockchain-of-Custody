@@ -86,6 +86,7 @@ def remove(item_id, reason, owner, file_path):
             success = True
         
         else:
+            print("Item is not Checked In")
             Initial_Block_Error()
 
     except:
