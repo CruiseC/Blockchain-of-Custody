@@ -5,49 +5,46 @@ import hashlib
 from collections import namedtuple
 from datetime import datetime
 from errors import *
-from initialize import initialize 
 
-def checkin(item_id, file_path):
+def checkout(item_id, file_path):
+
     success = True
     state = ''
     previousHash = b''
     case_id = ''
-    
+
     block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
     block_head = namedtuple('Block_head', 'hash timestamp case_id item_id state handler organization length')
     block_data = namedtuple('Block_Data', 'data')
-    
-    to_initialize = initialize(file_path)
-        
+
     filepath = open(file_path, 'rb')
-    
+
     while True:
-        
+
         try:
             head_contents = filepath.read(block_format_head.size)
             curr_head = block_head._make(
                 block_format_head.unpack(head_contents))
-            block_data_format = struct.Struct(
-                str(curr_head.length)+'s')
+            block_data_format = struct.Struct(str(curr_head.length)+'s')
             data_contents = filepath.read(curr_head.length)
             curr_data = block_data._make(
                 block_data_format.unpack(data_contents))
             
             previousHash = hashlib.sha1(head_contents+data_contents).digest()
-            
+
             if int(item_id[0]) == curr_head.item_id:
                 case_id = curr_head.case_id
                 state = curr_head.state
-                
+
         except:
-            break    
-            
+            break
+
     filepath.close()
-    
+
     try:
-        
+
         if state.decode('utf-8').rstrip('\x00') == "CHECKEDOUT":
-            
+
             currTime = datetime.now()
             timestamp = datetime.timestamp(currTime)
             headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDIN"), 0)
@@ -70,7 +67,7 @@ def checkin(item_id, file_path):
 
             print("Case:", str(uuid.UUID(bytes=case_id)))
             print("Checked in item:", item_id[0])
-            print("\tStatus:", "CHECKEDIN")
+            print("\tStatus:", "CHECKEDOUT")
             print("\tTime of action:", currTime.strftime(
                 '%Y-%m-%dT%H:%M:%S.%f') + 'Z')
 
