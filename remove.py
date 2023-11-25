@@ -24,6 +24,13 @@ def remove(item_id, reason, owner, file_path):
         head = file_path.read(block_format_head.size)
         current_head = block_head._make(block_format_head.unpack(head))
         data_format = struct.Struct(str(current_head.length))
-        data_content = 
+        data_content = file_path.read(current_head.length)
+        current_block_data = block_data._make(block_format_head.unpack(data_content))
+        prev_hash = hashlib.sha1(head+data_content).digest()
+
+        if int(item_id[0]) == current_head.item_id:
+            case_id = current_head.case_id
+            state = current_head.state
+
 
     file_path.close()

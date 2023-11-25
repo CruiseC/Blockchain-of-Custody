@@ -60,6 +60,16 @@ if action not in ["init", "verify"]:
 
     else: 
         print("remove")
+        # initialize arguments from the command line into the arguments array 
+        arguments["item_id"] = args.i 
+        arguments["reason"] = args.why
+        arguments["owner"] = args.o 
+
+        if (arguments["reason"] == "RELEASED"):
+            if not argumets["owner"]:
+                print("error")
+        # pass arguments into the remove function
+        remove(arguments["item_id"], arguments["reason"], argumets["owner"], file_path)
 
 else:
     if action == "init":
