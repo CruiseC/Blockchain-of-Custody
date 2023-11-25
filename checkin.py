@@ -26,7 +26,7 @@ def checkin(item_id, file_path):
         try:
             head_contents = filepath.read(block_format_head.size)
             curr_head = block_head._make(
-                block_format_head.unpack_head_contents))
+                block_format_head.unpack(head_contents))
             block_data_format = struct.Struct(
                 str(curr_head.length)+'s')
             data_contents = filepath.read(curr_head.length)
