@@ -9,6 +9,7 @@ from datetime import datetime
 
 from initialize import initialize
 from addition import addition
+from history import history
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -60,17 +61,20 @@ if action not in ["init", "verify"]:
         print ("checkout/checkin")
 
     elif action == "show" and shows == "cases":
-        #not working yet need to figure out way to go into this path with double letter arguments
+        
         print("cases showing")
 
 
     elif action == "show" and shows == "items":
-        #not working yet need to figure out way to go into this path with double letter arguments
+        
         print("show items")
 
     elif action == "show" and shows == "history":
-        #not working yet need to figure out way to go into this path with double letter arguments
-        print("history")
+        arguments["case_id"] = args.c
+        arguments["item_id"] = args.i
+        arguments["number"] = args.n
+
+        history(arguments["case_id"], arguments["item_id"], arguments["number"], file_path)
 
     else: 
         print("remove")
