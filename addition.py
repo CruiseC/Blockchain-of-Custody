@@ -87,7 +87,7 @@ def addition(case_id, item_id, handler, organization, file_path):
 
         if int(i) in prev_id:
             print("errror duplicate")
-            sys.exit(5)
+            sys.exit(1)
 
         if not print_case:
             print("Case: ", orig_case)
