@@ -8,6 +8,7 @@ import sys
 from datetime import datetime
 
 from initialize import initialize
+from addition import addition
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -40,7 +41,18 @@ if action not in ["init", "verify"]:
 
 
     if action == "add":
-        print("add")
+
+        #place arguments from commandline to lists
+        arguments["case_id"] = args.c
+        arguments["item_id"] = args.i 
+        arguments["handler"] = args.h 
+        arguments["organization"] = args.o 
+        if arguments["case_id"] and arguments["item_id"]:
+            addition(arguments["case_id"], arguments["item_id"], arguments["handler"], arguments["organization"], file_path)
+
+        else:
+            print("arguments error")
+        #print("add")
 
     elif action == "checkout" or action == "checkin":
         print ("checkout/checkin")
