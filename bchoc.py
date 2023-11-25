@@ -10,6 +10,7 @@ from datetime import datetime
 from initialize import initialize
 from addition import addition
 from history import history
+from cases import cases
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -60,10 +61,9 @@ if action not in ["init", "verify"]:
     elif action == "checkout" or action == "checkin":
         print ("checkout/checkin")
 
+    #show cases function
     elif action == "show" and shows == "cases":
-        
-        print("cases showing")
-
+        cases(file_path)
 
     elif action == "show" and shows == "items":
         

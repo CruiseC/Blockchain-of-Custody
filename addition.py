@@ -110,7 +110,7 @@ def addition(case_id, item_id, handler, organization, file_path):
         prev_hash = hashlib.sha1(packed_headVals + packed_dataVals).digest()
 
 
-        filepath = open(file_path, 'wb')
+        filepath = open(file_path, 'ab')
         filepath.write(packed_headVals)
         filepath.write(packed_dataVals)
         filepath.close()
