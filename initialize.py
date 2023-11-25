@@ -31,9 +31,9 @@ def initialize(file_path):
         curr_head = block_head._make(block_format_head.unpack(packed_headVals))
         curr_data = block_data._make(block_data_format.unpack(packed_dataVals))
 
-        print(curr_head)
-        print(curr_data)
-        print("This went thourhg initlaize path and printed")
+        #print(curr_head)
+        #print(curr_data)
+        #print("This went thourhg initlaize path and printed")
 
         filepath = open(file_path, 'wb')
         filepath.write(packed_headVals)
