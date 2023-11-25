@@ -96,7 +96,7 @@ else:
 
             #print(curr_head)
             #print(curr_data)
-            print("this was created because there was no blockchain in the first place")
+            print("Blockchain file not found. Created INITIAL block.")
 
             filepath = open(file_path, 'wb')
             filepath.write(packed_headVals)
