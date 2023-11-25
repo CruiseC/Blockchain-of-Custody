@@ -67,7 +67,11 @@ if action not in ["init", "verify"]:
 
         if (arguments["reason"] == "RELEASED"):
             if not argumets["owner"]:
-                print("error")
+                print("error") # replace with error handling
+        
+        if arguments["reason"] not in ["RELEASED", "DISPOSED", "DESTROYED"]:
+            print("error")  # replace with error handling
+
         # pass arguments into the remove function
         remove(arguments["item_id"], arguments["reason"], argumets["owner"], file_path)
 
