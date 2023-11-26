@@ -14,6 +14,7 @@ from cases import cases
 from checkin import checkin
 from checkout import checkout
 from remove import remove
+from items import items
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -77,8 +78,10 @@ if action not in ["init", "verify"]:
         cases(file_path)
 
     elif action == "show" and shows == "items":
+        arguments["case_id"] = args.c
+
+        items(arguments["case_id"], file_path)
         
-        print("show items")
 
     elif action == "show" and shows == "history":
         arguments["case_id"] = args.c
