@@ -37,15 +37,24 @@ def cases(file_path):
 
     filepath.close()
 
+    uniqueIDs = set()
 
     for block in blocks:
         caseID = b""
+        
 
         rev_case_id = block[0].case_id
 
         for j in range(0, len(rev_case_id)):
             caseID = bytes([rev_case_id[j]]) + caseID
-
-
-        print(uuid.UUID(bytes=caseID))
         
+        s = str(uuid.UUID(bytes=caseID))
+
+        uniqueIDs.add(s)
+
+        #print(uniqueIDs)
+        #print(uuid.UUID(bytes=caseID))
+    for ID in uniqueIDs:
+        if(ID != "00000000-0000-0000-0000-000000000000"):
+            print(ID)
+    
