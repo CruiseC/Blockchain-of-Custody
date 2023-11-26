@@ -7,7 +7,7 @@ from datetime import datetime
 from errors import *
 from initialize import initialize 
 
-def checkin(item_id, file_path):
+def checkin(item_id, handler, organization, file_path):
     success = True
     state = ''
     previousHash = b''
@@ -50,7 +50,7 @@ def checkin(item_id, file_path):
             
             currTime = datetime.now()
             timestamp = datetime.timestamp(currTime)
-            headVals = (previousHash, timestamp, case_id, item_id, int(item_id[0]), str.encode("CHECKEDIN"), handler, organization, 0)
+            headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDIN"), str.encode(""), str.encode(""), 0)
             dataVals = b''
             block_data_format = struct.Struct('0s')
             packed_headVals = block_format_head.pack(*headVals)
@@ -58,15 +58,22 @@ def checkin(item_id, file_path):
             curr_head = block_head._make(block_format_head.unpack(packed_headVals))
             curr_data = block_data._make(block_data_format.unpack(packed_dataVals))
             
-            print(curr_head)
-            print(curr_data)
+            #print(curr_head)
+            #print(curr_data)
             
             filepath = open(file_path, 'ab')
             filepath.write(packed_headVals)
             filepath.write(packed_dataVals)
             filepath.close()
 
-            print("Case:", str(uuid.UUID(bytes=case_id)))
+            caseID = b""
+        
+            rev_case_id = case_id
+
+            for j in range(0, len(rev_case_id)):
+                caseID = bytes([rev_case_id[j]]) + caseID
+
+            print("Case:", str(uuid.UUID(bytes=caseID)))
             print("Checked in item:", item_id[0])
             print("\tStatus:", "CHECKEDIN")
             print("\tTime of action:", currTime.strftime('%Y-%m-%dT%H:%M:%S.%f') + 'Z')
@@ -74,10 +81,12 @@ def checkin(item_id, file_path):
             success = True
         
         else:
+            sys.exit(1)
             print('Incorrect State')
 
     except:
         # Item ID not found
+        sys.exit(1)
         print('incorrect Item')
         
-    sys.exit(1)
+    sys.exit(0)
