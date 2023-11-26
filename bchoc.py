@@ -13,6 +13,7 @@ from history import history
 from cases import cases
 from checkin import checkin
 from checkout import checkout
+from remove import remove
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -86,7 +87,7 @@ if action not in ["init", "verify"]:
         print("remove")
         # initialize arguments from the command line into the arguments array 
         arguments["item_id"] = args.i 
-        arguments["reason"] = args.why
+        arguments["reason"] = args.y
         arguments["owner"] = args.o 
 
         if (arguments["reason"] == "RELEASED"):
