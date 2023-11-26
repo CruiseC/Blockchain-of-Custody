@@ -88,7 +88,7 @@ if action not in ["init", "verify"]:
         history(arguments["case_id"], arguments["item_id"], arguments["number"], file_path)
 
     else: 
-        print("remove")
+        # print("remove")
         # initialize arguments from the command line into the arguments array 
         arguments["item_id"] = args.i 
         arguments["reason"] = args.y
