@@ -39,6 +39,7 @@ def cases(file_path):
 
     uniqueIDs = set()
 
+    #iterate through blocks 
     for block in blocks:
         caseID = b""
         
@@ -50,11 +51,13 @@ def cases(file_path):
         
         s = str(uuid.UUID(bytes=caseID))
 
+        #adding case ids to a set
         uniqueIDs.add(s)
 
         #print(uniqueIDs)
         #print(uuid.UUID(bytes=caseID))
     for ID in uniqueIDs:
+        #not including initial block chain creation
         if(ID != "00000000-0000-0000-0000-000000000000"):
             print(ID)
     
