@@ -23,11 +23,11 @@ def remove(item_id, reason, owner, file_path):
     block_data = namedtuple('Block_Data', 'data')
 
     file_path = open(file_path, 'rb')
-    print("1")
+    # print("1")
 
     while True:
         try: 
-            print("2")
+            # print("2")
             head = file_path.read(block_format_head.size)
             current_head = block_head._make(block_format_head.unpack(head))
             data_format = struct.Struct(str(current_head.length) + 's')
@@ -48,37 +48,34 @@ def remove(item_id, reason, owner, file_path):
     file_path.close()
 
     try: 
-        print("3.1")
+        # print("3.1")
         if state.decode('utf-8').rstrip('\x00') == "CHECKEDIN":
-            print("3")
+            # print("3")
             current_time = datetime.now()
             time_stamp = datetime.timestamp(current_time)
 
             if owner: 
-
                 data_value = " ".join(owner)
-                head_values = (prev_hash, time_stamp, case_id, item_id, int(item_id[0]), str.encode(reason), handler, orginization, 0)
-
+                head_values = (prev_hash, time_stamp, case_id, int(item_id[0]), str.encode(reason), str.encode(""), str.encode(""), 0)
                 data_format = struct.Struct(str(len(data_value)+1)+'s')
-
-                # print(str(len(owner)) + 's', data_value, len(data_value))
-
                 packed_data_Vals = data_format.pack(str.encode(data_value))
-                print("b4")
+                # print("b4")
 
             else:
 
-                head_values = (prev_hash, time_stamp, case_id, item_id, int(item_id[0]), str.encode(reason), handler, orginization, 0)
+                head_values = (prev_hash, time_stamp, case_id, int(item_id[0]), str.encode(reason), str.encode(""), str.encode(""), 0)
                 data_format = struct.Struct('0s')
                 data_value = b''
                 packed_data_Vals = data_format.pack(data_value)
-            print("4")
+            # print("4")
             packed_head_Vals = block_format_head.pack(*head_values)
-            print("5")
+            # print("5")
             current_head = block_head._make(block_format_head.unpack(packed_head_Vals))
             current_block_data = block_data._make(data_format.unpack(packed_data_Vals))
+            
 
             file_path = open(file_path.name, 'ab')
+            # print("6")
             file_path.write(packed_head_Vals)
             file_path.write(packed_data_Vals)
             file_path.close()
@@ -96,5 +93,3 @@ def remove(item_id, reason, owner, file_path):
 
     except:
         Initial_Block_Error()
-
-    sys.exit(0)
