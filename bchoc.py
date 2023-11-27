@@ -18,6 +18,7 @@ from checkout import checkout
 from remove import remove
 from items import items
 from verify import verify
+from errors import *
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -63,7 +64,7 @@ if action not in ["init", "verify"]:
             addition(arguments["case_id"], arguments["item_id"], arguments["handler"], arguments["organization"], file_path)
 
         else:
-            print("arguments error")
+            Arguement_Error()
         #print("add")
 
     elif action == "checkout" or action == "checkin":
@@ -104,10 +105,10 @@ if action not in ["init", "verify"]:
 
         if (arguments["reason"] == "RELEASED"):
             if not arguments["owner"]:
-                print("error") # replace with error handling
+                Arguement_Error() 
         
         if arguments["reason"] not in ["RELEASED", "DISPOSED", "DESTROYED"]:
-            print("error")  # replace with error handling
+            Arguement_Error()  
 
         # pass arguments into the remove function
         remove(arguments["item_id"], arguments["reason"], arguments["owner"], file_path)
@@ -149,7 +150,7 @@ else:
 
     else:
         #verify
-        print("verify")
+        
         count = 0 
         block_chain_state = "CLEAN"
         verify(file_path)
