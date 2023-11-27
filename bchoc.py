@@ -29,7 +29,7 @@ parser.add_argument('-i', action='append') #Item ID
 parser.add_argument('-h') #handler  
 parser.add_argument('-o') #organization 
 parser.add_argument('-n') #number of entries
-parser.add_argument('-y', '-why') #reason
+parser.add_argument('-y', '--why') #reason
 parser.add_argument('-o', nargs='*') #owner Info
 parser.add_argument('-r', '--reverse', action="store_true") # reverse
 
@@ -40,8 +40,8 @@ arguments = {}
 
 
 
-#file_path = os.getenv('BCHOC_FILE_PATH')
-file_path = "Blockchain"
+file_path = os.getenv('BCHOC_FILE_PATH')
+#file_path = "Blockchain"
 
 
 block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
@@ -100,7 +100,7 @@ if action not in ["init", "verify"]:
         # print("remove")
         # initialize arguments from the command line into the arguments array 
         arguments["item_id"] = args.i 
-        arguments["reason"] = args.y
+        arguments["reason"] = args.why
         arguments["owner"] = args.o 
 
         if (arguments["reason"] == "RELEASED"):
