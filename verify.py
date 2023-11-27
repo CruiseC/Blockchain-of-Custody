@@ -31,10 +31,10 @@ def verify(file_path):
     count = 0
 
     while True:
-
+        
         try:
-            head_contents = filepath(block_data_format.size)
-            
+            head_contents = filepath.read(block_format_head.size)
+            #print("1")
             curr_head = block_head._make(block_format_head.unpack(head_contents))
             block_data_format = struct.Struct(str(curr_head.length)+'s')
             data_contents = filepath.read(curr_head.length)
@@ -111,14 +111,40 @@ def verify(file_path):
 
     filepath.close()
 
-    if unsuccess:
-        Invalid_Chain()
+    #if unsuccess:
+        #Invalid_Chain()
 
-    if len(currHash) != len(set(currHash)):
+    #if len(currHash) != len(set(currHash)):
+        #Duplicate_Hashes()
+
+    
+    #print(block_list)
+    #print()
+
+    if unsuccess:
+        print("Transactions in blockchain:", count)
+        print("State of blockchain: ERROR")
+        print("Bad block:", curr_head.hash.hex())
+        print("Parent block: NOT FOUND")
+
+    elif len(currHash) != len(set(currHash)):
+        print("Transactions in blockchain:", count)
+        print("State of blockchain: ERROR")
+        print("Bad block:", curr_head.hash.hex())
+        print("Parent block: NOT FOUND")
         Duplicate_Hashes()
 
-    print(block_list)
-    print()
+    elif previousHash[:-1] != currHash[1:]:
+        print("Transactions in blockchain:", count)
+        print("State of blockchain: ERROR")
+        print("Bad block:", curr_head.hash.hex())
+        print("Parent block:", previousHash[-1].hex())
+        Invalid_Chain()
+
+    else:
+        print("Transactions in blockchain:", count)
+        print("State of blockchain: CLEAN")
+        print()
 
     if previousHash[:-1] != currHash[1:]:
         Invalid_Chain()

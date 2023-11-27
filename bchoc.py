@@ -145,7 +145,7 @@ else:
 
     else:
         #verify
-        # print("verify")
+        print("verify")
         count = 0 
         block_chain_state = "CLEAN"
         verify(file_path)
