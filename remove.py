@@ -18,6 +18,8 @@ def remove(item_id, reason, owner, file_path):
     state = ''
     prev_hash = b''
 
+    print(owner)
+
     block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
     block_head = namedtuple('Block_head', 'hash timestamp case_id item_id state handler organization length')
     block_data = namedtuple('Block_Data', 'data')
@@ -40,7 +42,9 @@ def remove(item_id, reason, owner, file_path):
                 case_id = current_head.case_id
                 state = current_head.state
                 handler = current_head.handler
-                orginization = current_head.organization
+                organization = current_head.organization
+
+                
         
         except: 
             break
@@ -56,14 +60,14 @@ def remove(item_id, reason, owner, file_path):
 
             if owner: 
                 data_value = " ".join(owner)
-                head_values = (prev_hash, time_stamp, case_id, int(item_id[0]), str.encode(reason), str.encode(""), str.encode(""), 0)
+                head_values = (prev_hash, time_stamp, case_id, int(item_id[0]), str.encode(reason), handler, organization, len(data_value)+1)
                 data_format = struct.Struct(str(len(data_value)+1)+'s')
                 packed_data_Vals = data_format.pack(str.encode(data_value))
                 # print("b4")
 
             else:
 
-                head_values = (prev_hash, time_stamp, case_id, int(item_id[0]), str.encode(reason), str.encode(""), str.encode(""), 0)
+                head_values = (prev_hash, time_stamp, case_id, int(item_id[0]), str.encode(reason), handler, organization, 0)
                 data_format = struct.Struct('0s')
                 data_value = b''
                 packed_data_Vals = data_format.pack(data_value)

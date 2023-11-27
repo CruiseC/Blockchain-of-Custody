@@ -39,9 +39,9 @@ shows = args.shows
 arguments = {}
 
 
-
-#file_path = os.getenv('BCHOC_FILE_PATH')
-file_path = "Blockchain"
+# grade scope submission filepath
+file_path = os.getenv('BCHOC_FILE_PATH')
+#file_path = "Blockchain"
 
 
 block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
