@@ -13,6 +13,9 @@ def checkout(item_id, handler, organization, file_path):
     previousHash = b''
     case_id = ''
 
+    #store organization in string for encode
+    organ = organization[0]
+
     block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
     block_head = namedtuple('Block_head', 'hash timestamp case_id item_id state handler organization length')
     block_data = namedtuple('Block_Data', 'data')
@@ -50,7 +53,7 @@ def checkout(item_id, handler, organization, file_path):
 
             currTime = datetime.now()
             timestamp = datetime.timestamp(currTime)
-            headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDOUT"), str.encode(""), str.encode(""), 0)
+            headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDOUT"), handler.encode(), organ.encode(), 0)
             dataVals = b''
             block_data_format = struct.Struct('0s')
             packed_headVals = block_format_head.pack(*headVals)

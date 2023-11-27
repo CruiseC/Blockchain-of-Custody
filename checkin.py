@@ -12,6 +12,11 @@ def checkin(item_id, handler, organization, file_path):
     state = ''
     previousHash = b''
     case_id = ''
+
+    #store organization in string for encode
+    organ = organization[0]
+    
+
     
     block_format_head = struct.Struct('32s d 16s I 12s 20s 20s I')
     block_head = namedtuple('Block_head', 'hash timestamp case_id item_id state handler organization length')
@@ -36,13 +41,11 @@ def checkin(item_id, handler, organization, file_path):
                 case_id = curr_head.case_id
                 state = curr_head.state
                 
-                handler = curr_head.handler
-                organization = curr_head.organization
-                
         except:
             break    
             
     filepath.close()
+
     
     try:
         
@@ -50,7 +53,7 @@ def checkin(item_id, handler, organization, file_path):
             
             currTime = datetime.now()
             timestamp = datetime.timestamp(currTime)
-            headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDIN"), str.encode(""), str.encode(""), 0)
+            headVals = (previousHash, timestamp, case_id, int(item_id[0]), str.encode("CHECKEDIN"), handler.encode(), organ.encode(), 0)
             dataVals = b''
             block_data_format = struct.Struct('0s')
             packed_headVals = block_format_head.pack(*headVals)
@@ -81,12 +84,14 @@ def checkin(item_id, handler, organization, file_path):
             success = True
         
         else:
-            sys.exit(1)
             print('Incorrect State')
+            sys.exit(1)
+            
 
     except:
         # Item ID not found
-        sys.exit(1)
         print('incorrect Item')
+        sys.exit(1)
+        
         
     sys.exit(0)
