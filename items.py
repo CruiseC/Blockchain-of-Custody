@@ -33,6 +33,9 @@ def items(case_id, file_path):
 
     filepath.close()
 
+    #add set for duplicate handling
+    uniqueItems = set()
+
     for block in blocks:
         caseID = b""
 
@@ -44,6 +47,8 @@ def items(case_id, file_path):
         s = str(uuid.UUID(bytes=caseID))
 
         if(case_id == s):
-            print(block[0].item_id)
+            uniqueItems.add(block[0].item_id)
             
+    for items in uniqueItems:
+        print(items)
     
