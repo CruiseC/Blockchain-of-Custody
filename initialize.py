@@ -52,7 +52,7 @@ def initialize(file_path):
     except:
         print("Blockchain file not found.")
         
-        Initial_Block_Error
+        Initial_Block_Error()
 
     filepath.close()
 
