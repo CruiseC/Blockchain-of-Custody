@@ -15,6 +15,7 @@ from checkin import checkin
 from checkout import checkout
 from remove import remove
 from items import items
+from verify import verify
 
 parser = argparse.ArgumentParser(description="Create Blockchain of Custody form", add_help=False, conflict_handler='resolve')
 # action = {add, checkout, checkin, show cases, show items, show history, remove, init, verify}
@@ -144,6 +145,9 @@ else:
 
     else:
         #verify
-        print("verify")
+        # print("verify")
+        count = 0 
+        block_chain_state = "CLEAN"
+        verify(file_path)
 
 sys.exit(0)
