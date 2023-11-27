@@ -1,4 +1,9 @@
-Group Project: 
+
+Group: CJT Team!
+Members: Tom Tram ID#1216933068, Cruise Costin ID#1217157448, Jordan Post ID#1217339136 
+
+Description: The program creates a Blockchain that allows a chain of custory form to be created and inserted into the block chain. Various functions surrounding the blockchain are created and implemented such as add, remove, checkin, checkout, show history/items/cases, and verify. These functions all support the blockchain and allow it to be manipulated in such ways that allow the user to use the blockchain effectively. 
+
 Blockchain Chain of Custody
 * Due Date:  Nov.  29,  2023,  11:59 pm 
 * Done By: Groups
