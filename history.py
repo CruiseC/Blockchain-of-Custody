@@ -7,7 +7,7 @@ from datetime import datetime
 from collections import namedtuple
 
 
-def history(case_id, item_id, number, file_path):
+def history(case_id, item_id, number, reverse, file_path):
 
 
 
@@ -62,7 +62,10 @@ def history(case_id, item_id, number, file_path):
 
         while(i < len(blocks)):
             blocks.pop(i)
-
+    if(reverse):
+        # blocks_to_be_displayed = blocks[:]
+        # blocks_to_be_displayed.reverse()
+        blocks.reverse()
 
 
 

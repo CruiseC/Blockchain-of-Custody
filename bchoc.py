@@ -28,6 +28,7 @@ parser.add_argument('-o') #organization
 parser.add_argument('-n') #number of entries
 parser.add_argument('-y', '-why') #reason
 parser.add_argument('-o', nargs='*') #owner Info
+parser.add_argument('-r', '--reverse', action="store_true") # reverse
 
 args = parser.parse_args()
 action = args.action
@@ -88,8 +89,9 @@ if action not in ["init", "verify"]:
         arguments["case_id"] = args.c
         arguments["item_id"] = args.i
         arguments["number"] = args.n
+        arguments["reverse"] = args.reverse
 
-        history(arguments["case_id"], arguments["item_id"], arguments["number"], file_path)
+        history(arguments["case_id"], arguments["item_id"], arguments["number"], arguments["reverse"], file_path)
 
     else: 
         # print("remove")
